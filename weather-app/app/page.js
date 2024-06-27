@@ -54,8 +54,12 @@ export default function Home() {
       <h1>Weather App</h1>
 
       {/* Overlay */}
-      <div className="absolute top-0 left-0 right-0 bottom-0 bg-black/35 z-[1]" />
-
+      {loading && (
+        <div className="absolute inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+          <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-16 w-16"></div>
+        </div>
+      )}
+      
       {/* Backgroung Image */}
       <NextImage src="https://images.unsplash.com/photo-1580193769210-b8d1c049a7d9?q=80&w=3274&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt="Weather"
