@@ -8,6 +8,16 @@ import { useState } from "react";
 import {BsSearch} from "react-icons/bs";
 import axios from "axios"; // For https requests
 
+function Weather( {data} ) {
+  console.log("inside component",data);
+  return (
+    <div className="relative z-[1] text-white">
+      <h1>The weather showed up</h1>
+    </div>
+  );
+
+}
+
 export default function Home() {
 
   const [weather, setWeather] = useState({});
@@ -25,12 +35,15 @@ export default function Home() {
       .get(url)
       .then((res) => {
         setWeather(res.data);
-        console.log(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
       });
       setCity("");
-      setLoading(false);
-  }
-
+  };
+  
   return (
     <div>
       <Head>
@@ -42,6 +55,7 @@ export default function Home() {
 
       {/* Overlay */}
       <div className="absolute top-0 left-0 right-0 bottom-0 bg-black/35 z-[1]" />
+
       {/* Backgroung Image */}
       <NextImage src="https://images.unsplash.com/photo-1580193769210-b8d1c049a7d9?q=80&w=3274&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt="Weather"
@@ -51,13 +65,13 @@ export default function Home() {
 
       {/* Search Bar */}
       <div className="relative flex justify-center items-center max-w-[500px] m-auto">
-        <form onSubmit={getWeather} className="flex items-center bg-white rounded-full p-3 focus: outline-none z-[1]">
-          <div>
+        <form className="flex items-center bg-transparent border rounded-full p-3 focus: outline-none z-[1] w-full">
+          <div className="w-full">
           <input 
             type="text"
             placeholder="Enter City"
             onChange={(e) => setCity(e.target.value)}
-            className="outline-none"
+            className="bg-transparent outline-none w-full text-white placeholder-grey text-2xl"
           />
           </div>
           <button
@@ -65,10 +79,13 @@ export default function Home() {
             className="text-blue-500"
             onClick={getWeather}
           >
-            <BsSearch />
+            <BsSearch size={25}/>
           </button>
         </form>
       </div>
+
+      {/* Weather Data */}
+      {weather.main && <Weather data={weather}/>}
     </div>
   );
 }
