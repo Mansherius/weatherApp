@@ -11,8 +11,33 @@ import axios from "axios"; // For https requests
 function Weather( {data} ) {
   console.log("inside component",data);
   return (
-    <div className="relative z-[1] text-white">
-      <h1>The weather showed up</h1>
+    <div className="relative flex flex-col justify-between max-w-[500px] w-full h-[90vh] m-auto p-4 text-white z-[10]">
+      {/* Top part */}
+      <div className="relative flex justify-between pt-12">
+          <div className="flex flex-col items-center">
+            <NextImage src={`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`} alt="Weather Icon" width={100} height={100}/>
+            <p className="text-2xl">{data.weather[0].description}</p>
+          </div>
+          <p className="text-9xl">{data.main.temp.toFixed(0)}&#176;</p>
+      </div>
+      {/* Bottom part */}
+      <div className="relative bg-black/75 p-8 rounded-md mb-auto mt-auto">
+        <p className="text-2xl text-center pb-6">Weather in {data.name}</p>
+          <div className="flex justify-between">
+            <div>
+              <p className="text-xl">Feels Like</p>
+              <p className="text-2xl font-bold">{data.main.feels_like.toFixed(0)}&#176;</p>
+            </div>
+            <div>
+              <p className="text-2xl font-bold">{data.main.humidity.toFixed(0)}%</p>
+              <p className="text-xl">Humidity</p>
+            </div>
+            <div>
+              <p className="text-2xl font-bold">{data.wind.speed.toFixed(0)} MPH</p>
+              <p className="text-xl">Winds</p>
+            </div>
+          </div>
+      </div>
     </div>
   );
 
